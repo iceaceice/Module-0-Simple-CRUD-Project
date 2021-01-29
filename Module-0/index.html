@@ -1,0 +1,98 @@
+<html>
+
+	<head>
+		<style>
+			body{
+				text-align: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-image: url(background.gif);
+			}
+			a{
+				color : green;
+				background-color: transparent;
+				text-decoration: none;
+			}
+			button{
+				border: 2px solid green;
+				background-color: green;
+				border-collapse : separate;
+				border-spacing : 20px;
+				transition-duration: 0.4s;
+				cursor: pointer;
+				border-radius: 12px;
+			}
+			button:hover{
+				background-color: gray;
+			}
+			button:active {
+				  background-color: #3e8e41;
+				  box-shadow: 0 5px #666;
+				  transform: translateY(4px);
+			}
+			h1{
+				color: green;
+				font-size: 50px;
+			}
+			h2{
+				color: white;
+			}
+			label{
+				color: green;
+				font-size: 15px;
+			}
+			th{
+				color: green;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+	
+	<body>
+			<h1 align = "center">My Bucket List</h1>
+	</body>
+	 
+	<head>
+			<form action="connect.php" method="POST">
+			
+				<label for="bucketlist">Bucket List: </label>
+				<input type="text" name="bucketlist">
+				<button type="submit">Add List</button>
+				
+			</form>
+	</head>
+	
+	<body>
+			<table>
+				<th>List ID</th>
+				<th>Bucket List</th>
+				<th>Date Added</th>
+				<th>Edit/Update</th>
+				<th>Remove</th>
+				
+				<?php
+					$conn = mysqli_connect('localhost', 'root', '', 'bucketlistdb');
+					if($conn-> connect_error){
+						die("Connection Failed");
+					}
+					
+					$sql = "SELECT id, bucketlist, date FROM bucketlistdb";
+					$result = $conn-> query($sql);
+					if(result-> num_rows > 0){
+						while($row = $result-> fetch_assoc()){
+							echo "<tr><td>", $row["id"], "</td><td>", $row["buckietlist"], "</td><td>", $row["date"], "</td></tr>"<>;
+						}
+						echo "</table>";
+					}
+					else{
+						echo "Zero Result";
+					}
+					$conn-> close();
+				?>
+			</table>
+			
+			
+	</body>
+	
+	
+</html>
